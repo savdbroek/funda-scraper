@@ -13,7 +13,7 @@ const pastResults = new Set(JSON.parse(data) || []);
 console.log('pastResults:', pastResults);
 const newResults = new Set();
 const houses = [];
-const { CHAT_ID, BOT_API } = process.env;
+const { DISCORD_WEBHOOK_URL } = process.env;
 
 const urls = [
     'https://www.funda.nl/en/koop/amsterdam/beschikbaar/0-300000/40+woonopp/2+slaapkamers/1-dag/',
@@ -77,8 +77,6 @@ shareOfTurkey: **${shareOfTurkey}**
 `;
                 text = `${text}\n${extraStuff}`;
             }
-
-            const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL'; // Replace with your Discord webhook URL
 
             nodeFetch(DISCORD_WEBHOOK_URL, {
                 method: 'POST',
