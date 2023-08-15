@@ -33,7 +33,7 @@ const runTask = async () => {
             ...pastResults,
         ])));
 
-        console.log('sending messages to Telegram');
+        console.log('sending messages to Discord');
         const date = (new Date()).toISOString().split('T')[0];
         houses.forEach(({
             path,
@@ -78,17 +78,18 @@ shareOfTurkey: **${shareOfTurkey}**
                 text = `${text}\n${extraStuff}`;
             }
 
-            nodeFetch(`https://api.telegram.org/bot${BOT_API}/sendMessage`, {
+            const DISCORD_WEBHOOK_URL = 'YOUR_DISCORD_WEBHOOK_URL'; // Replace with your Discord webhook URL
+
+            nodeFetch(DISCORD_WEBHOOK_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    text,
-                    chat_id : CHAT_ID,
-                    parse_mode : 'markdown',
+                    content: text,
                 }),
             });
+
         });
     }
 };
@@ -176,8 +177,8 @@ const runPuppeteer = async (url) => {
     await browser.close();
 };
 
-if (CHAT_ID && BOT_API) {
+if (DISCORD_WEBHOOK_URL) {
     runTask();
 } else {
-    console.log('Missing Telegram API keys!');
+    console.log('Missing Discord URL');
 }
